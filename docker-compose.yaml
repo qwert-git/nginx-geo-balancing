@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  nginx-balancer:
+    image: shashwot/nginx-more:latest
+    container_name: nginx-geoip2
+    ports:
+      - 8080:80
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+      - './country.mmdb:/var/lib/GeoIP/GeoLite2-Country.mmdb'
+    restart: unless-stopped
+  
+  nginx-us1:
+    image: shashwot/nginx-more:latest
+    container_name: nginx-us1
+    ports:
+      - 8081:80
+    volumes:
+      - './servers/us1.nginx.conf:/etc/nginx/nginx.conf'
+    restart: unless-stopped
+  
+  nginx-us2:
+    image: shashwot/nginx-more:latest
+    container_name: nginx-us2
+    ports:
+      - 8082:80
+    volumes:
+      - './servers/us2.nginx.conf:/etc/nginx/nginx.conf'
+    restart: unless-stopped 
